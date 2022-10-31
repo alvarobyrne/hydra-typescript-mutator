@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"
+      integrity="sha512-Kpi2Sp2KpXM2S7aM0p+CwWhm8NuogI15GFPXCmgqAnFr5c86VBXuLEZu0IGBwGSdhhTW6148hP9KTcRMmrjuFQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css"
+      integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/mode/javascript/javascript.min.js"
+      integrity="sha512-I6CdJdruzGtvDyvdO4YsiAq+pkWf2efgd1ZUSK2FnM/u2VuRASPC7GowWQrWyjxCZn6CT89s3ddGI+be0Ak9Fg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/merge/merge.min.css"
+      integrity="sha512-4ZFb0fWFyvDx41W+EjvXqlZ3462tmHKrDmpNPAzAtut+NlsyNZQ0TvZMG6g0PvXbqUQ+OCyUuu9Khz5GBhZuAw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/merge/merge.min.js"
+      integrity="sha512-wFCBfveDJVT/lPEFrYU9svSoLOWClczC1uQ5tstJErttRDSZqyR7PPmUsKw/VgK8nfcCFqqPm4KLulm8fT4VXw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <div id="view"></div>
+    <div id="code"></div>
+
+    <div id="app">
+      <p>
+        First <code>parse</code> with
+        <a target="_blank" href="https://github.com/acornjs/acorn">acorn</a>
+      </p>
+      <p>
+        Then <code>transform</code> using <code>makeTraveler</code> from
+        <a target="_blank" href="https://github.com/davidbonnet/astravel#readme"
+          >astravel</a
+        >
+      </p>
+      <p>
+        Then <code>attachcomments</code> also from
+        <a target="_blank" href="https://github.com/davidbonnet/astravel#readme"
+          >astravel</a
+        >
+      </p>
+      <p>
+        Then <code>generate</code> with
+        <a target="_blank" href="https://github.com/davidbonnet/astring#readme"
+          >astring</a
+        >
+      </p>
+      <p>Get all numbers in an arraya/vector :</p>
+      <p>
+        A codemirror 5 addon which depends on the
+        <a
+          target="_blank"
+          href="https://code.google.com/p/google-diff-match-patch/"
+          >google-diff-match-patch</a
+        >
+        library to compute the diffs is used.
+      </p>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
