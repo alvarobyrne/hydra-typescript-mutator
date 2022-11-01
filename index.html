@@ -45,6 +45,15 @@
 
     <div id="app">
       <span id="close-help">x</span>
+      <p>
+        Every time you click on code below, such code is shown on left pane
+        above and a mutation of itself is shown on right pane. The diffs are
+        highlighted (red dotted underline)
+      </p>
+      <p>
+        Left checkbox controls reroll; right checkbox controls wether or not
+        mutate the hydra transformations.
+      </p>
       <h1>Mutation proces schematically explained:</h1>
       <p>
         First <code>parse</code> with
@@ -52,7 +61,7 @@
         get an <code>AST</code>.
       </p>
       <p>
-        Then <code>transform</code>the <code>AST</code> using a traveler made
+        Then <code>transform</code> the <code>AST</code> using a traveler made
         with <code>makeTraveler</code> from
         <a target="_blank" href="https://github.com/davidbonnet/astravel#readme"
           >astravel</a
@@ -76,7 +85,7 @@
         Use<a href="https://beautifier.io/">js-beautify</a> to format the code
         back again
       </p>
-      <br />
+      <h1>Two extensions</h1>
       <p>
         Totally unrelated, in the process made a pair of extensions (test on
         left pane/code editor):
@@ -92,7 +101,7 @@
           change the number by functions of time<code> ()=>f(time)</code>
         </li>
       </ul>
-      <br />
+      <h1>Merge addon</h1>
       <p>
         Using <a href="https://codemirror.net/5/addon/merge/merge.js">merge</a>:
         A codemirror 5 addon which depends on the
@@ -104,10 +113,7 @@
         library to compute the diffs.
       </p>
       <br />
-      <p>
-        Left checkbox controls reroll; right checkbox controls wether or not
-        mutate the hydra transformations.
-      </p>
+      <p>Press F1 to toggle this explanation's visibility</p>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
