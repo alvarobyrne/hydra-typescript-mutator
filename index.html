@@ -47,15 +47,16 @@
       <h1>Mutation proces schematically explained:</h1>
       <p>
         First <code>parse</code> with
-        <a target="_blank" href="https://github.com/acornjs/acorn">acorn</a>
+        <a target="_blank" href="https://github.com/acornjs/acorn">acorn</a> and
+        get an <code>AST</code>.
       </p>
       <p>
-        Then <code>transform</code> using a <code>makeTraveler</code> taylored
-        for
+        Then <code>transform</code>the <code>AST</code> using a traveler made
+        with <code>makeTraveler</code> from
         <a target="_blank" href="https://github.com/davidbonnet/astravel#readme"
           >astravel</a
-        >
-        to use
+        >. With this treveler Literal nodes and functions (CallExpression nodes)
+        are isolated and changed.
       </p>
       <p>
         Then <code>attachcomments</code> also from
@@ -64,12 +65,12 @@
         >
       </p>
       <p>
-        Then <code>generate</code> with
+        Then use <code>generate</code> from
         <a target="_blank" href="https://github.com/davidbonnet/astring#readme"
           >astring</a
         >
+        in order to regenerate the code from the <code>AST</code>.
       </p>
-      <p>Get all numbers in an arraya/vector :</p>
       <br />
       <p>
         Using <a href="https://codemirror.net/5/addon/merge/merge.js">merge</a>:

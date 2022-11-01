@@ -61,6 +61,7 @@ div pre {
   margin-bottom: 20px;
   padding: 10px;
   background-color: #111;
+  max-width: 512px;
 }
 
 @media (prefers-color-scheme: light) {
