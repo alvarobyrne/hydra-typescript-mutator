@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"
+      integrity="sha512-Kpi2Sp2KpXM2S7aM0p+CwWhm8NuogI15GFPXCmgqAnFr5c86VBXuLEZu0IGBwGSdhhTW6148hP9KTcRMmrjuFQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css"
+      integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/mode/javascript/javascript.min.js"
+      integrity="sha512-I6CdJdruzGtvDyvdO4YsiAq+pkWf2efgd1ZUSK2FnM/u2VuRASPC7GowWQrWyjxCZn6CT89s3ddGI+be0Ak9Fg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/merge/merge.min.css"
+      integrity="sha512-4ZFb0fWFyvDx41W+EjvXqlZ3462tmHKrDmpNPAzAtut+NlsyNZQ0TvZMG6g0PvXbqUQ+OCyUuu9Khz5GBhZuAw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/merge/merge.min.js"
+      integrity="sha512-wFCBfveDJVT/lPEFrYU9svSoLOWClczC1uQ5tstJErttRDSZqyR7PPmUsKw/VgK8nfcCFqqPm4KLulm8fT4VXw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="module" crossorigin src="/assets/index.143f0c92.js"></script>
+    <link rel="stylesheet" href="/assets/index.edb0918d.css">
+  </head>
+  <body>
+    <div id="view"></div>
+    <div id="code"></div>
+
+    <div id="app">
+      <span id="close-help">x</span>
+      <p>
+        <a
+          target="_blank"
+          href="https://github.com/hydra-synth/hydra/blob/main/frontend/web-editor/src/views/editor/randomizer/Mutator.js"
+          >Hydra's web editor mutator</a
+        >
+        ported to typescript
+      </p>
+      <p>
+        Every time you click on code below, such code is shown on left pane
+        above and a mutation of itself is shown on right pane. The diffs are
+        highlighted (red dotted underline)
+      </p>
+      <p>
+        Left checkbox controls reroll; right checkbox controls wether or not
+        mutate the hydra transformations.
+      </p>
+      <h1>Mutation proces schematically explained:</h1>
+      <p>
+        First <code>parse</code> with
+        <a target="_blank" href="https://github.com/acornjs/acorn">acorn</a> and
+        get an <code>AST</code>.
+      </p>
+      <p>
+        Then <code>transform</code> the <code>AST</code> using a traveler made
+        with <code>makeTraveler</code> from
+        <a target="_blank" href="https://github.com/davidbonnet/astravel#readme"
+          >astravel</a
+        >. With this treveler Literal nodes and functions (CallExpression nodes)
+        are isolated and changed.
+      </p>
+      <p>
+        Then <code>attachcomments</code> also from
+        <a target="_blank" href="https://github.com/davidbonnet/astravel#readme"
+          >astravel</a
+        >
+      </p>
+      <p>
+        Then use <code>generate</code> from
+        <a target="_blank" href="https://github.com/davidbonnet/astring#readme"
+          >astring</a
+        >
+        in order to regenerate the code from the <code>AST</code>.
+      </p>
+      <p>
+        Use <a href="https://beautifier.io/">js-beautify</a> to format the code
+        back again
+      </p>
+      <h1>Two extensions</h1>
+      <p>
+        Totally unrelated, in the process, made a pair of extensions (test on
+        left pane/code editor):
+      </p>
+      <ul>
+        <li>selecting tokens:</li>
+        <ul>
+          <li><code>ctrl+shift+, (comma)</code> will select previous token</li>
+          <li><code>ctrl+shift+. (Period)</code> will select next token;</li>
+        </ul>
+        <li>
+          When a number is selected pressing <code>ctrl+shift+1,2,3</code> will
+          change the number by functions of time<code> ()=>f(time)</code>
+        </li>
+      </ul>
+      <p>TODO: pull this extension(s) to their own repo</p>
+      <h1>Merge addon</h1>
+      <p>
+        Using <a href="https://codemirror.net/5/addon/merge/merge.js">merge</a>:
+        A codemirror 5 addon which depends on the
+        <a
+          target="_blank"
+          href="https://code.google.com/p/google-diff-match-patch/"
+          >google-diff-match-patch</a
+        >
+        library to compute the diffs.
+      </p>
+      <br />
+      <p>Press F1 to toggle this explanation's visibility</p>
+      <p>code was generated with hydra-code-generator</p>
+    </div>
+    
+  </body>
+</html>
