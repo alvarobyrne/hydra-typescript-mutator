@@ -221,9 +221,12 @@ function replaceNumberByFunction(e: KeyboardEvent) {
   e.preventDefault();
   const n = e.code.replace("Digit", "");
   console.log("n: ", n);
-  console.log("dv: ", dv.editor().doc);
-  const doc = dv.editor().doc;
+  // console.log("dv: ", dv.editor().doc);
+  const doc = cm.doc;
   const selection = doc.getSelection();
+  console.log("selection: ", selection);
+  const number = Number(selection);
+  if (isNaN(number)) return;
   if (!selection) {
     return;
   }
