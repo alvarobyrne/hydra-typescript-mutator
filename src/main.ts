@@ -102,7 +102,7 @@ const load = async () => {
     const trimmed = sketch.trim();
     const codeMutatroExplorer = new CodeMutatorExplorer(trimmed, mutator);
     codeMutatroExplorer.on("mutated", (data) => {
-      console.log("data: ", data);
+      // console.log("data: ", data);
       value = data.original;
       orig2 = data.mutated;
       initUI();
@@ -124,8 +124,6 @@ const load = async () => {
   addListeners();
   // placeSelection();
 };
-const codes = [];
-window.codes = codes;
 function addListeners() {
   window.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.shiftKey && e.ctrlKey) {
@@ -217,7 +215,6 @@ function selectWordAtCursor(isForward = true) {
     }
     selectWordAtCursor(isForward);
   }
-  const selection = cm.getSelection();
 }
 function replaceNumberByFunction(e: KeyboardEvent) {
   e.preventDefault();
@@ -229,13 +226,12 @@ function replaceNumberByFunction(e: KeyboardEvent) {
   if (!selection) {
     return;
   }
-  // return;
   const replacement = replacements[n];
   if (replacement) {
     doc.replaceSelection(replacement);
   }
 }
-const replacements = {
+const replacements: { [index: string]: string } = {
   "1": "()=>time",
   "2": "()=>Math.sin(time*1.0)*1.0",
   "3": "()=>(time/1)%1",

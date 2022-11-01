@@ -4,7 +4,6 @@ import EventEmitter from "eventemitter3";
 class CodeMutatorExplorer extends EventEmitter {
   private text: string;
   private mutator: Mutator;
-  private mutation: Element;
   private isRerrollCheck: HTMLInputElement;
   private isChangeTransformCheck: HTMLInputElement;
   constructor(text: string, mutator: Mutator) {
@@ -29,11 +28,11 @@ class CodeMutatorExplorer extends EventEmitter {
     divElemenent.appendChild(pre);
   }
   mutate() {
-    console.clear();
+    // console.clear();
     const isReroll = this.isRerrollCheck.checked;
     const isChangeTransform = this.isChangeTransformCheck.checked;
-    console.log("isReroll: ", isReroll);
-    console.log("this: ", this.text);
+    // console.log("isReroll: ", isReroll);
+    // console.log("this: ", this.text);
     const options = {
       reroll: isReroll,
       changeTransform: isChangeTransform,
