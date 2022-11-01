@@ -96,7 +96,7 @@ const load = async () => {
   // console.log('codeRaw: ', codeRaw);
   const mutator = new Mutator();
 
-  const codeArrayUntrimmed = codeRaw.split("---");
+  const codeArrayUntrimmed = codeRaw.split("****");
   codeArrayUntrimmed.shift();
   const codeArray = codeArrayUntrimmed.map((sketch) => {
     const trimmed = sketch.trim();
