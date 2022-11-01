@@ -46,6 +46,14 @@
     <div id="app">
       <span id="close-help">x</span>
       <p>
+        <a
+          target="_blank"
+          href="https://github.com/hydra-synth/hydra/blob/main/frontend/web-editor/src/views/editor/randomizer/Mutator.js"
+          >Hydra's web editor mutator</a
+        >
+        ported to typescript
+      </p>
+      <p>
         Every time you click on code below, such code is shown on left pane
         above and a mutation of itself is shown on right pane. The diffs are
         highlighted (red dotted underline)
@@ -82,12 +90,12 @@
         in order to regenerate the code from the <code>AST</code>.
       </p>
       <p>
-        Use<a href="https://beautifier.io/">js-beautify</a> to format the code
+        Use <a href="https://beautifier.io/">js-beautify</a> to format the code
         back again
       </p>
       <h1>Two extensions</h1>
       <p>
-        Totally unrelated, in the process made a pair of extensions (test on
+        Totally unrelated, in the process, made a pair of extensions (test on
         left pane/code editor):
       </p>
       <ul>
@@ -101,6 +109,7 @@
           change the number by functions of time<code> ()=>f(time)</code>
         </li>
       </ul>
+      <p>TODO: pull this extension(s) to their own repo</p>
       <h1>Merge addon</h1>
       <p>
         Using <a href="https://codemirror.net/5/addon/merge/merge.js">merge</a>:
@@ -114,6 +123,7 @@
       </p>
       <br />
       <p>Press F1 to toggle this explanation's visibility</p>
+      <p>code was generated with hydra-code-generator</p>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
