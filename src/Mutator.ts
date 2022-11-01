@@ -32,7 +32,11 @@ type Node2 = {
 };
 
 type State = { literalTab: Node2[]; functionTab: Node2[] };
-export type MutationConfig = { reroll: boolean; changeTransform: boolean };
+export type MutationConfig = {
+  reroll: boolean;
+  changeTransform: boolean;
+  attempts: number;
+};
 const glslTransforms = [...generatorTransforms, ...modifierTransforms];
 // type TransformType = keyof typeof glslTransforms;
 class Mutator {
@@ -45,7 +49,7 @@ class Mutator {
   private initialVector: (string | number)[];
   private literalsCount: number = 0;
   private functionsCount: number = 0;
-  private lastLiteralValue: number | undefined = undefined;
+  private lastLiteralIndex: number | undefined = undefined;
   //   private editor;
   //   constructor(editor) {
   constructor() {
@@ -106,9 +110,9 @@ class Mutator {
     // let text = options.text;
     // this.undoStack.push({ text, lastLitX: this.lastLitX });
     let needToRun = true;
-    let tryCounter = 5;
+    let tryCounter = options.attempts;
     let regeneratedCode: string | undefined;
-    while (needToRun && tryCounter-- >= 0) {
+    while (needToRun && --tryCounter >= 0) {
       //   console.log("tryCounter: ", tryCounter);
       // Parse to AST
       var comments: Comment[] = [];
@@ -160,13 +164,17 @@ class Mutator {
     let traveler = makeTraveler({
       go: function (node: Node2, state: State) {
         if (node.type === "Literal") {
+          //<------------------------------------------------------Gather literal
           state.literalTab.push(node);
+          /*
         } else if (node.type === "MemberExpression") {
           if (node.property && node.property.type === "Literal") {
             // numeric array subscripts are ineligable
             return;
           }
+          */
         } else if (node.type === "CallExpression") {
+          //<------------------------------------------------------Gather function
           if (
             node.callee &&
             node.callee.property &&
@@ -186,6 +194,7 @@ class Mutator {
     // state.functionTab = [];
 
     traveler.go(ast, state);
+    console.log("state: ", state);
 
     this.literalsCount = state.literalTab.length;
     this.functionsCount = state.functionTab.length;
@@ -201,28 +210,35 @@ class Mutator {
     } else this.glitchLiteral(state, options);
   }
   glitchLiteral(state: State, options: MutationConfig) {
-    let litx = 0;
+    let literalIndex = 0;
     if (options.reroll) {
-      if (this.lastLiteralValue !== undefined) {
-        litx = this.lastLiteralValue;
+      if (this.lastLiteralIndex !== undefined) {
+        literalIndex = this.lastLiteralIndex;
       }
     } else {
-      litx = Math.floor(Math.random() * this.literalsCount);
-      this.lastLiteralValue = litx;
+      literalIndex = Math.floor(Math.random() * this.literalsCount);
+      this.lastLiteralIndex = literalIndex;
     }
 
-    let modLit = state.literalTab[litx];
+    let modLit = state.literalTab[literalIndex];
     if (modLit) {
       // let glitched = this.glitchNumber(modLit.value);
       let glitched = this.glitchRelToInit(
         Number(modLit.value),
-        Number(this.initialVector[litx])
+        Number(this.initialVector[literalIndex])
       );
       //@ts-ignore
       let was = modLit.raw;
       modLit.value = glitched;
       modLit.raw = "" + glitched;
-      //   console.log(        "Literal: " + litx + " changed from: " + was + " to: " + glitched      );
+      console.log(
+        "Literal: " +
+          literalIndex +
+          " changed from: " +
+          was +
+          " to: " +
+          glitched
+      );
     }
   }
 

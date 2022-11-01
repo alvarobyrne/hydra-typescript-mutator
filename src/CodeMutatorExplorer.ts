@@ -36,9 +36,14 @@ class CodeMutatorExplorer extends EventEmitter {
     const options = {
       reroll: isReroll,
       changeTransform: isChangeTransform,
+      attempts: 1,
     };
-    const mutated = this.mutator.mutate(this.text, options);
-    this.emit("mutated", { original: this.text, mutated });
+    try {
+      const mutated = this.mutator.mutate(this.text, options);
+      this.emit("mutated", { original: this.text, mutated });
+    } catch (e) {
+      console.log("e: ", e);
+    }
     // value = this.text;
     // orig2 = mutated;
     // initUI();

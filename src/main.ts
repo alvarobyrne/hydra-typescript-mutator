@@ -114,6 +114,7 @@ const load = async () => {
   orig1 = mutator.mutate(codeArray[0], {
     changeTransform: false,
     reroll: true,
+    attempts: 5,
   });
   orig2 = orig1;
   initUI();
