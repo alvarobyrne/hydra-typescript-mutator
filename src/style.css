@@ -13,6 +13,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  overflow: hidden;
 }
 
 h1 {
@@ -82,7 +83,7 @@ div pre {
 
 #code {
   height: 50vh;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 #close-help {
