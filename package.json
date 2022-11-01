@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "@types/acorn": "^6.0.0",
@@ -22,7 +23,9 @@
     "astring": "^1.8.3",
     "dat.gui": "^0.7.9",
     "eventemitter3": "^4.0.7",
+    "gh-pages": "^4.0.0",
     "hydra-ts": "^1.0.0",
     "js-beautify": "^1.14.7"
-  }
+  },
+  "homepage": "https://alvarobyrne.github.io/hydra-typescript-mutator"
 }
