@@ -240,3 +240,17 @@ const replacements: { [index: string]: string } = {
   "2": "()=>Math.sin(time*1.0)*1.0",
   "3": "()=>(time/1)%1",
 };
+const appDiv = document.querySelector("#app")! as HTMLElement;
+document.querySelector("#close-help")?.addEventListener("click", () => {
+  appDiv.style.display = "none";
+});
+window.addEventListener("keydown", (e) => {
+  if (e.code === "F1") {
+    e.preventDefault();
+    if (appDiv.style.display === "block" || appDiv.style.display === "") {
+      appDiv.style.display = "none";
+    } else {
+      appDiv.style.display = "block";
+    }
+  }
+});

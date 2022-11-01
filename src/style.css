@@ -84,3 +84,7 @@ div pre {
   height: 50vh;
   overflow: scroll;
 }
+
+#close-help {
+  cursor: pointer;
+}
