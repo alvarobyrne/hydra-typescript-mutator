@@ -44,15 +44,18 @@
     <div id="code"></div>
 
     <div id="app">
+      <h1>Mutation proces schematically explained:</h1>
       <p>
         First <code>parse</code> with
         <a target="_blank" href="https://github.com/acornjs/acorn">acorn</a>
       </p>
       <p>
-        Then <code>transform</code> using <code>makeTraveler</code> from
+        Then <code>transform</code> using a <code>makeTraveler</code> taylored
+        for
         <a target="_blank" href="https://github.com/davidbonnet/astravel#readme"
           >astravel</a
         >
+        to use
       </p>
       <p>
         Then <code>attachcomments</code> also from
@@ -67,14 +70,21 @@
         >
       </p>
       <p>Get all numbers in an arraya/vector :</p>
+      <br />
       <p>
+        Using <a href="https://codemirror.net/5/addon/merge/merge.js">merge</a>:
         A codemirror 5 addon which depends on the
         <a
           target="_blank"
           href="https://code.google.com/p/google-diff-match-patch/"
           >google-diff-match-patch</a
         >
-        library to compute the diffs is used.
+        library to compute the diffs.
+      </p>
+      <br />
+      <p>
+        Left checkbox controls reroll; right checkbox controls wether or not
+        mutate the hydra transformations.
       </p>
     </div>
     <script type="module" src="/src/main.ts"></script>
