@@ -108,7 +108,7 @@ const load = async () => {
     return trimmed;
   });
   value = codeArray[0];
-  console.log("value: ", value);
+  // console.log("value: ", value);
   orig1 = mutator.mutate(codeArray[0], {
     changeTransform: false,
     reroll: true,
@@ -116,12 +116,11 @@ const load = async () => {
   orig2 = orig1;
   initUI();
   let d = document.createElement("div");
-  console.log("d: ", d);
   d.style.cssText = "width: 50px; margin: 7px; height: 14px";
   d.style.backgroundColor = "red";
   dv.editor().addLineWidget(57, d);
   addListeners();
-  placeSelection();
+  // placeSelection();
 };
 const codes = [];
 window.codes = codes;
@@ -137,36 +136,38 @@ function addListeners() {
     }
   });
   window.addEventListener("keydown", (e) => {
-    console.log("e: ", e.code, e.ctrlKey);
     if (e.shiftKey && e.ctrlKey) {
       if (e.code === "Period") {
         e.preventDefault();
         selectWordAtCursor();
       } else if (e.code === "Comma") {
         e.preventDefault();
-        selectWordAtCursor();
+        selectWordAtCursor(false);
       }
     }
   });
 }
 const validTokenTypes = ["variable", "property", "number", "operator"];
 const invalidOperators = ["=>"];
-function selectWordAtCursor() {
+function selectWordAtCursor(isForward = true) {
   // console.clear();
   const cm = dv.editor();
-  const cursor = cm.getCursor();
+  const start = isForward ? "head" : "anchor";
+  const cursor = cm.getCursor(start);
   const { line: lineNumber } = cursor;
   let cursorCharacterPosition = cursor.ch;
-  const lineTokens = cm.getLineTokens(cursor.line);
+  const lineTokens = cm.getLineTokens(lineNumber);
   let currentToken;
   /**
    * find the token at the current cursor position which is not of type null
    */
   for (let index = 0; index < lineTokens.length; index++) {
     const token = lineTokens[index];
-    const isInRange =
-      token.start <= cursorCharacterPosition &&
-      cursorCharacterPosition < token.end;
+    let isInRange = isForward
+      ? token.start <= cursorCharacterPosition &&
+        cursorCharacterPosition < token.end
+      : token.start < cursorCharacterPosition &&
+        cursorCharacterPosition <= token.end;
     const isValidType = validTokenTypes.includes(token.type);
     if (isInRange && isValidType) {
       currentToken = token;
@@ -185,23 +186,36 @@ function selectWordAtCursor() {
     const isInvalidOperator = invalidOperators.includes(selection);
     console.log("isInvalidOperator: ", isInvalidOperator);
     if (isInvalidOperator) {
-      selectWordAtCursor();
+      selectWordAtCursor(isForward);
     }
   } else {
-    // console.log("no");
-    const nextPosition = cursor.ch + 1;
-    const nextLine = lineNumber + 1;
-    // console.log("nextPosition: ", nextPosition);
-    if (nextPosition >= lineLength) {
-      if (nextLine > lastLine) {
+    const sense = isForward ? 1 : -1;
+    const nextPosition = cursorCharacterPosition + sense;
+    const nextLine = lineNumber + sense;
+    const nextPositionCondition = isForward
+      ? nextPosition >= lineLength
+      : nextPosition <= 0;
+    if (nextPositionCondition) {
+      const nextLinePositionCondition = isForward
+        ? nextLine > lastLine
+        : nextLine < 0;
+      if (nextLinePositionCondition) {
         return;
       } else {
-        cm.setCursor(nextLine, 0);
+        let nextPosition2;
+        if (isForward) {
+          nextPosition2 = 0;
+        } else {
+          const lineTokens = cm.getLineTokens(nextLine);
+          nextPosition2 = lineTokens[lineTokens.length - 1].end;
+        }
+
+        cm.setCursor(nextLine, nextPosition2);
       }
     } else {
       cm.setCursor(lineNumber, nextPosition);
     }
-    selectWordAtCursor();
+    selectWordAtCursor(isForward);
   }
   const selection = cm.getSelection();
   console.log("selection: ", selection);
