@@ -68,7 +68,8 @@ let value: string,
   panes = 2,
   highlight = true,
   connect: string | null = "align",
-  collapse = false;
+  collapse = false,
+  cm: any;
 function initUI() {
   if (value == null) return;
   var target = document.getElementById("view");
@@ -84,6 +85,7 @@ function initUI() {
     connect: connect,
     collapseIdentical: collapse,
   });
+  cm = dv.editor();
 }
 window.onload = function () {
   load();
@@ -151,7 +153,6 @@ const validTokenTypes = ["variable", "property", "number", "operator"];
 const invalidOperators = ["=>"];
 function selectWordAtCursor(isForward = true) {
   // console.clear();
-  const cm = dv.editor();
   const start = isForward ? "head" : "anchor";
   const cursor = cm.getCursor(start);
   const { line: lineNumber } = cursor;
@@ -184,7 +185,6 @@ function selectWordAtCursor(isForward = true) {
     cm.setSelection(anchor, head);
     const selection = cm.getSelection();
     const isInvalidOperator = invalidOperators.includes(selection);
-    console.log("isInvalidOperator: ", isInvalidOperator);
     if (isInvalidOperator) {
       selectWordAtCursor(isForward);
     }
@@ -218,7 +218,6 @@ function selectWordAtCursor(isForward = true) {
     selectWordAtCursor(isForward);
   }
   const selection = cm.getSelection();
-  console.log("selection: ", selection);
 }
 function replaceNumberByFunction(e: KeyboardEvent) {
   e.preventDefault();
@@ -241,57 +240,3 @@ const replacements = {
   "2": "()=>Math.sin(time*1.0)*1.0",
   "3": "()=>(time/1)%1",
 };
-function placeSelection(params: type) {
-  const cm = dv.editor();
-  const doc = cm.getDoc();
-
-  cm.focus();
-  const cursor = doc.getCursor();
-  console.log("cursor: ", cursor);
-  // doc.setSelection({ line: 0, char: 0 }, { line: 0, char: 1 });
-  // doc.replaceSelection("dfsdfsdf");
-  // doc.replaceRange("asdasda", { line: 0, char: 0 }, { line: 0, char: 1 });
-  const value = cm.getValue();
-  console.log("value: ", value);
-  // cm.on("beforeSelectionChange", onCodeMirrorSelect);
-}
-function onCodeMirrorSelect(completion, element) {
-  console.log("completion: ", completion);
-  console.log("element: ", element);
-  getAnchorAndHead();
-}
-setInterval(() => {
-  return;
-  console.clear();
-  const cm = dv.editor();
-  const cursor = cm.getCursor();
-  const word = cm.findWordAt(cursor);
-  console.log("word.anchor: ", word.anchor);
-  console.log("word.head  : ", word.head);
-  cm.setSelection(word.anchor, word.head);
-  // console.log("cursor: ", cursor);
-  // const selection = cm.getSelection("<>");
-  // console.log("selection: ", selection);
-  // getAnchorAndHead();
-}, 1000);
-function getAnchorAndHead() {
-  const cm = dv.editor();
-
-  const anchor = cm.getCursor("anchor");
-  const head = cm.getCursor("head");
-  console.log("head: ", head);
-  console.log("anchor: ", anchor);
-}
-/*
-let count = 0;
-setInterval(() => {
-  return;
-  const cm = dv.editor();
-  const doc = cm.getDoc();
-
-  cm.setSelection({ line: 0, char: count }, { line: 0, char: 0 });
-
-  count++;
-  console.log("count: ", count);
-}, 2000);
-*/
